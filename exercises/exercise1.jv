@@ -30,11 +30,11 @@ pipeline AirportsPipeline {
         "ICAO" oftype text,
         "Latitude" oftype decimal,
         "Longitude" oftype decimal,
-        "Altitude" oftype decimal,
+        "Altitude" oftype integer,
         "Zeitzone" oftype text,
         "DST" oftype text,
-        "Zeitzonen-Datenbank" oftype decimal,
-        "geo_punkt" oftype decimal
+        "Zeitzonen-Datenbank" oftype text,
+        "geo_punkt" oftype text
     ];
     }
 
