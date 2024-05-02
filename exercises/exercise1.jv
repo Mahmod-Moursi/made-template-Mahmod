@@ -1,0 +1,46 @@
+//Exercise 1
+//The task is to build an automated data pipeline using Jayvee to process data from a source, then write the processed data into a SQLite database.
+
+
+pipeline AirportsPipeline {
+
+    //1 step: Connect the blocks with the pipes (Should be at the end but following the example from the slides it would be at the top)
+    AirportsExtractor -> AirportsTextFileInterpreter -> AirportsCSVInterpreter -> AirportsTableInterpreter -> AirportsLoader;
+    
+    //2 step: download the data, which is from a CSV file containing information about airports worldwide.
+    block AirportsExtractor oftype HttpExtractor {
+        url: "https://opendata.rhein-kreis-neuss.de/api/explore/v2.1/catalog/datasets/rhein-kreis-neuss-flughafen-weltweit/exports/csv?lang=en&timezone=Europe%2FBerlin&use_labels=true&delimiter=%3B";
+    }
+
+    //3 step: interpret the data as a text file, this just reads the text data from the file so no parsing basically
+    block AirportsTextFileInterpreter oftype TextFileInterpreter { }
+
+    //4 step: Interpret the data as CSV  
+    block AirportsCSVInterpreter oftype CSVInterpreter { delimiter: ';'; } // Because in the file, each field within a row is separated by a ;
+
+    //5 step: Interpret the CSV  as a table then define it
+    block AirportsTableInterpreter oftype TableInterpreter {
+        header: true;
+    columns: [
+        "Lfd. Nummer" oftype integer,
+        "Name des Flughafens" oftype text,
+        "Ort" oftype text,
+        "Land" oftype text,
+        "IATA" oftype text,
+        "ICAO" oftype text,
+        "Latitude" oftype decimal,
+        "Longitude" oftype decimal,
+        "Altitude" oftype decimal,
+        "Zeitzone" oftype text,
+        "DST" oftype text,
+        "Zeitzonen-Datenbank" oftype text,
+        "geo_punkt" oftype text
+    ];
+    }
+
+    //6 step: write the data to SQLite 
+    block AirportsLoader oftype SQLiteLoader { table: "airports"; file: "./airports.sqlite"; }
+
+    
+
+}
