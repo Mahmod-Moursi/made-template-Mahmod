@@ -1,6 +1,6 @@
 # Exercise Badges
 
-![](https://byob.yarr.is/made-template-Mahmod/Mahmod-Moursi/score_ex1) ![](https://byob.yarr.is/Mahmod-Moursi/made-template-Mahmod/score_ex2) ![](https://byob.yarr.is/Mahmod-Moursi/made-template-Mahmod/score_ex3) ![](https://byob.yarr.is/Mahmod-Moursi/made-template-Mahmod/score_ex4) ![](https://byob.yarr.is/Mahmod-Moursi/made-template-Mahmod/score_ex5)
+![](https://byob.yarr.is/Mahmod-Moursi/made-template-Mahmod/score_ex1) ![](https://byob.yarr.is/Mahmod-Moursi/made-template-Mahmod/score_ex2) ![](https://byob.yarr.is/Mahmod-Moursi/made-template-Mahmod/score_ex3) ![](https://byob.yarr.is/Mahmod-Moursi/made-template-Mahmod/score_ex4) ![](https://byob.yarr.is/Mahmod-Moursi/made-template-Mahmod/score_ex5)
 
 # Methods of Advanced Data Engineering Template Project
 
