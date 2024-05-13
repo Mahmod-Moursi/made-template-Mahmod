@@ -1,0 +1,56 @@
+// Exercise 2: Automated Data Pipeline for Stadt Neuss Baumpflanzungen 2023
+//The task is to fetch the data from the web, filters and transforms it, and loads it into a SQLite database.
+
+pipeline TreesDataPipeline {
+
+    //Connect the blocks with the pipes (I think it Should be at the end but following the example from the slides it would be at the top)
+    TreesHttpExtractor -> TreesTextFileInterpreter -> TreesCSVInterpreter -> ColumnDeleter -> TressTableInterpreter -> treeloader;
+
+    // HTTP Extractor to fetch CSV data
+    block TreesHttpExtractor oftype HttpExtractor {
+        url: "https://opendata.rhein-kreis-neuss.de/api/v2/catalog/datasets/stadt-neuss-herbstpflanzung-2023/exports/csv";
+    }
+    // Interpret the data as a text file
+    block TreesTextFileInterpreter oftype TextFileInterpreter {}
+
+    // Interpret the data as CSV, each field within a row is separated by a ;
+    block TreesCSVInterpreter oftype CSVInterpreter { delimiter: ';'; }
+    //Interpret the CSV  as a table then define it
+    block TressTableInterpreter oftype TableInterpreter {
+        header: true;
+        columns:[
+            "lfd_nr" oftype integer,
+            "stadtteil" oftype FurthOnly, // FurthOnly is a valuetype defined below, specifing a constraint to only have values that start with "Furth-"
+            "standort" oftype text,
+            "baumart_botanisch" oftype text,
+            "baumart_deutsch" oftype text,
+            "id" oftype GeoOnly, // GeoOnly is a value type defined belowm specifing a constraint that makes sure 'id' is of the correct pattern
+            "baumfamilie" oftype text
+        ];
+    }
+    // Load processed data into a SQLite database
+    block treeloader oftype SQLiteLoader { table: "trees"; file: "./trees.sqlite"; }
+    // A value type with a constraint for stadtteil column
+    valuetype FurthOnly oftype text{
+        constraints: [
+        FurthConstrain,
+    ];
+    }
+    // A value type with a constraint for ID column
+    valuetype GeoOnly oftype text{
+        constraints: [
+        GeoConstrain,
+    ];
+    }
+    // Deletes a specified column from the table "baumart_deutsch"
+    block ColumnDeleter oftype ColumnDeleter {
+   delete: [column D];
+    }
+    // Constraint for FurthOnly value type to ensure stadtteil starts with "Furth-"
+    constraint FurthConstrain on text:
+        value matches /^Furth-/;
+    // Constraint for GeoOnly value type to match geo-coordinate pattern
+    constraint GeoConstrain on text:
+        value matches /\d{1,3}\.\d+, \d{1,3}\.\d+/;
+    
+}
