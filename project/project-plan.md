@@ -57,6 +57,6 @@ This dataset provides per capita greenhouse gas emissions data for different cou
    - Explore the correlation between greenhouse gas emissions and temperature anomalies.
    - Investigate how the correlation varies across different countries and regions.
 
-[i1]: [https://github.com/Mahmod-Moursi/made-template-Mahmod/issues/1](https://github.com/Mahmod-Moursi/made-template-Mahmod/issues/1)
-[i2]: [https://github.com/Mahmod-Moursi/made-template-Mahmod/issues/2](https://github.com/Mahmod-Moursi/made-template-Mahmod/issues/2)
-[i3]: [https://github.com/Mahmod-Moursi/made-template-Mahmod/issues/3](https://github.com/Mahmod-Moursi/made-template-Mahmod/issues/3)
+[i1]: https://github.com/Mahmod-Moursi/made-template-Mahmod/issues/1
+[i2]: https://github.com/Mahmod-Moursi/made-template-Mahmod/issues/2
+[i3]: https://github.com/Mahmod-Moursi/made-template-Mahmod/issues/3
