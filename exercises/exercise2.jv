@@ -44,7 +44,7 @@ pipeline TreesDataPipeline {
     }
     // Deletes a specified column from the table "baumart_deutsch"
     block ColumnDeleter oftype ColumnDeleter {
-   delete: [column D];
+   delete: [column E];
     }
     // Constraint for FurthOnly value type to ensure stadtteil starts with "Furth-"
     constraint FurthConstrain on text:
