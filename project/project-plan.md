@@ -60,3 +60,56 @@ This dataset provides per capita greenhouse gas emissions data for different cou
 [i1]: https://github.com/Mahmod-Moursi/made-template-Mahmod/issues/1
 [i2]: https://github.com/Mahmod-Moursi/made-template-Mahmod/issues/2
 [i3]: https://github.com/Mahmod-Moursi/made-template-Mahmod/issues/3
+
+# Project Issue Log
+
+## 1. Difficulty in Locating Dataset
+
+### Issue:
+Finding the direct link to download the Annual Temperature Anomalies dataset from Our World in Data proved challenging, hindering progress in accessing necessary project data.
+
+### Solution:
+Contacted Our World in Data for assistance in locating the dataset and explored alternative sources to obtain the required data.
+
+### Temporary Fix:
+As a temporary measure, utilized the available GitHub repository for the CO2 and greenhouse gas emissions dataset from Our World in Data as a substitute for the missing temperature anomalies dataset.
+
+---
+
+## 2. Dataset Content Mismatch
+
+### Issue:
+Upon retrieval of data from the GitHub repository for CO2 and greenhouse gas emissions, it became apparent that the dataset differed in format and content from the expected data, complicating data processing and analysis.
+
+### Solution:
+Thoroughly examined the dataset's documentation and structure to gain a better understanding of its contents and variables.
+
+### Temporary Fix:
+Filtered the dataset to include only the relevant columns (country, year, total_ghg) required for the project so that it's more in line with the format and content from the expected data and removed missing values from the total_ghg column to ensure data integrity.
+
+---
+
+## 3. Non-Consecutive Years in Dataset
+
+### Issue:
+The filtered dataset contained non-consecutive years, potentially affecting data continuity and analysis accuracy.
+
+### Solution:
+Considered implementing additional filtering criteria to include only consecutive years in the dataset, thereby enhancing data coherence and reliability.
+
+### Temporary Fix:
+Implemented a temporary fix to filter the dataset for consecutive years, albeit acknowledging the potential reduction in data size resulting from this approach.
+
+---
+
+## 4. Dependency on Annual Temperature Anomalies Dataset
+
+### Issue:
+The project's dependency on the Annual Temperature Anomalies dataset for aligning years and ensuring data consistency posed a significant challenge, especially in the absence of direct access to the dataset.
+
+### Solution:
+Explored various alternatives for aligning years across datasets, including integrating data from alternative sources or devising methods to estimate missing values.
+
+### Temporary Fix:
+Continued utilizing available datasets while developing strategies to handle missing or non-consecutive data points, prioritizing the maintenance of data integrity and project progress.
+
