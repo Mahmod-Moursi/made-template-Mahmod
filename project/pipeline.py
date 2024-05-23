@@ -28,7 +28,8 @@ def load_and_filter_temperature_data(url):
 
 # Function to store data in /data directory
 def save_data(df, filename):
-    data_dir = 'data'
+    # Use the absolute path to the data directory
+    data_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data'))
     if not os.path.exists(data_dir):
         os.makedirs(data_dir)
     filepath = os.path.join(data_dir, filename)
