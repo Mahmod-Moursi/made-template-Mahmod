@@ -113,3 +113,48 @@ Explored various alternatives for aligning years across datasets, including inte
 ### Temporary Fix:
 Continued utilizing available datasets while developing strategies to handle missing or non-consecutive data points, prioritizing the maintenance of data integrity and project progress.
 
+
+# Project Updates
+
+## Project Initiation
+- Started the project by reviewing the project requirements and objectives outlined in the project plan.
+- Identified the key tasks and milestones necessary to complete the project successfully.
+
+## Data Collection
+- Researched and identified potential data sources relevant to the project's objectives.
+- Found and selected the primary dataset (Datasource1: CO2 and Greenhouse Gas Emissions) from ourworldindata.org.
+- Encountered difficulties in acquiring the data from Datasource2: Annual Temperature Anomalies.
+- Explored alternative datasets and considered how they could complement the primary dataset.
+
+## Script Development
+- Began developing the data pipeline script (pipeline.py) to automate the data collection and transformation process.
+- Faced challenges in structuring the Datasource2 (Per Capita Greenhouse Gas Emissions) due to inconsistencies with the original data on ourworldindata.org.
+- Investigated methods to filter and preprocess the data to align with project requirements.
+- Explored potential modifications to the project question to accommodate alternative datasets or adjustments in data processing.
+<!--
+## Script Testing and Debugging
+- Tested the data pipeline script locally to ensure its functionality.
+- Identified and resolved issues related to data extraction, transformation, and storage.
+- Collaborated with peers and mentors to troubleshoot challenging aspects of the script development.
+
+## Project Plan Review
+- Reviewed and updated the project plan to reflect changes in data availability and project scope.
+- Documented challenges and considerations encountered during the data collection and preprocessing phases.
+- Revisited the project objectives and refined the research question based on available datasets and project constraints.
+
+## Script Deployment and Documentation
+- Prepared the script (pipeline.py) for deployment by making it executable (pipeline.sh) and ensuring compatibility with GitHub workflows.
+- Documented the script's functionality, input/output requirements, and potential troubleshooting steps.
+- Updated the README.md file to provide instructions for running the script and accessing project resources.
+
+## Final Review and Reflection
+- Conducted a final review of the project components to ensure alignment with project objectives and requirements.
+- Reflecting on the project journey, identified lessons learned and areas for improvement in future projects.
+- Prepared for project presentation and discussion with mentors, incorporating feedback and insights gained throughout the project lifecycle.
+
+## Project Conclusion
+- Completed the data pipeline implementation, addressing challenges and adapting to changes in data availability and project scope.
+- Compiled project documentation, including the project plan, script documentation, and project updates, for submission and review.
+- Reflecting on the project experience, considered implications for future research and potential avenues for further exploration.
+-->
+
