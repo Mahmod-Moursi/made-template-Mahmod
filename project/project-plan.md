@@ -2,15 +2,15 @@
 
 ## Title
 
-Climate Change Analysis: Understanding the Relationship between Greenhouse Gas Emissions and Temperature Anomalies
+Climate Change Analysis: Understanding the Relationship between Greenhouse Gas Emissions and Energy Production
 
 ## Main Question
 
-1. What is the relationship between greenhouse gas emissions and temperature anomalies across different countries, and how does it vary based on regional, economic, and climatic factors?
+1. What is the relationship between greenhouse gas emissions and energy production across different countries, and how does it vary based on regional, economic, and climatic factors?
 
 ## Description
 
-Climate change is a pressing global issue with far-reaching implications for ecosystems, economies, and human well-being. This project aims to analyze the relationship between greenhouse gas emissions and temperature anomalies using data-driven methods. By examining emissions and temperature data from multiple countries, we seek to uncover patterns, trends, and potential causal relationships. Insights gained from this analysis can inform policy decisions, mitigation strategies, and adaptation measures to address climate change effectively.
+Climate change is a pressing global issue with far-reaching implications for ecosystems, economies, and human well-being. This project aims to analyze the relationship between greenhouse gas emissions and energy production using data-driven methods. By examining emissions and energy data from multiple countries, we seek to uncover patterns, trends, and potential causal relationships. Insights gained from this analysis can inform policy decisions, mitigation strategies, and adaptation measures to address climate change effectively.
 
 In selecting countries for analysis, we considered several factors such as geographical diversity, economic significance, emissions intensity, and data availability. The chosen countries represent a range of regions, economic statuses, and emissions profiles, providing a comprehensive perspective on the global dynamics of climate change. Specifically, we have chosen:
 
@@ -25,23 +25,24 @@ In selecting countries for analysis, we considered several factors such as geogr
 - Australia: Reliant on fossil fuels, vulnerable to climate impacts.
 - Canada: Abundant natural resources, emissions from oil extraction.
 
-This diverse set of countries provides a rich dataset for analyzing the complex interactions between emissions, temperature anomalies, and socio-economic factors.
+This diverse set of countries provides a rich dataset for analyzing the complex interactions between emissions, energy production, and socio-economic factors.
 
 ## Datasources
 
-### Datasource1: Annual Temperature Anomalies
-* Metadata URL: N/A
-* Data URL: https://ourworldindata.org/grapher/annual-temperature-anomalies
+### Datasource1: CO2 and Greenhouse Gas Emissions
+* Metadata URL: https://github.com/owid/co2-data/blob/master/owid-co2-data.csv
+* Data URL: https://github.com/owid/co2-data
 * Data Type: CSV
 
-This dataset contains annual temperature anomaly data for various countries over a specified time period. Each record includes information such as the country, year, and temperature anomaly.
+This dataset contains data on CO2 and greenhouse gas emissions for various countries over a specified time period. Each record includes information such as the country, year, population, GDP, total greenhouse gas emissions, and per capita emissions.
 
-### Datasource2: Per Capita Greenhouse Gas Emissions
-* Metadata URL: N/A
-* Data URL: https://ourworldindata.org/explorers/co2?facet=none&country=DEU~USA~ZAF~RUS~CHN~JPN~IND~CAN~BRA~AUS&hideControls=false&Gas+or+Warming=All+GHGs+%28CO%E2%82%82eq%29&Accounting=Production-based&Fuel+or+Land+Use+Change=All+fossil+emissions&Count=Per+capita
+### Datasource2: Energy
+* Metadata URL: https://github.com/owid/energy-data/blob/master/owid-energy-data.csv
+* Data URL: https://github.com/owid/energy-data
 * Data Type: CSV
 
-This dataset provides per capita greenhouse gas emissions data for different countries over a specified time period. Each record includes information such as the country, year, and emissions in CO2 equivalents.
+This dataset provides data on energy production and consumption for different countries over a specified time period. Each record includes information such as the country, year, population, GDP, total electricity generation, and emissions from electricity generation.
+
 
 ## Work Packages
 
@@ -74,18 +75,21 @@ Contacted Our World in Data for assistance in locating the dataset and explored 
 ### Temporary Fix:
 As a temporary measure, utilized the available GitHub repository for the CO2 and greenhouse gas emissions dataset from Our World in Data as a substitute for the missing temperature anomalies dataset.
 
+### Resolution:
+Ultimately decided to replace the Annual Temperature Anomalies dataset with a more relevant and accessible dataset from Our World in Data, focusing on energy production.
+
 ---
 
 ## 2. Dataset Content Mismatch
 
 ### Issue:
-Upon retrieval of data from the GitHub repository for CO2 and greenhouse gas emissions, it became apparent that the dataset differed in format and content from the expected data, complicating data processing and analysis.
+Upon retrieval of data from the GitHub repository for CO2 and greenhouse gas emissions, it became apparent that the dataset differed in format and content from the data in the Our World in Data website , complicating data processing and analysis.
 
 ### Solution:
 Thoroughly examined the dataset's documentation and structure to gain a better understanding of its contents and variables.
 
-### Temporary Fix:
-Filtered the dataset to include only the relevant columns (country, year, total_ghg) required for the project so that it's more in line with the format and content from the expected data and removed missing values from the total_ghg column to ensure data integrity.
+### Resolution:
+Decided to rely solely on the data from the GitHub repository, ensuring consistency and simplifying data processing.
 
 ---
 
@@ -97,8 +101,8 @@ The filtered dataset contained non-consecutive years, potentially affecting data
 ### Solution:
 Considered implementing additional filtering criteria to include only consecutive years in the dataset, thereby enhancing data coherence and reliability.
 
-### Temporary Fix:
-Implemented a temporary fix to filter the dataset for consecutive years, albeit acknowledging the potential reduction in data size resulting from this approach.
+### Update:
+Revised the data processing script to ensure that both the CO2 and Greenhouse Gas Emissions dataset and the Energy dataset include only consecutive years for each country, maintaining consistency and reliability in the analysis.
 
 ---
 
@@ -110,9 +114,8 @@ The project's dependency on the Annual Temperature Anomalies dataset for alignin
 ### Solution:
 Explored various alternatives for aligning years across datasets, including integrating data from alternative sources or devising methods to estimate missing values.
 
-### Temporary Fix:
-Continued utilizing available datasets while developing strategies to handle missing or non-consecutive data points, prioritizing the maintenance of data integrity and project progress.
-
+### Resolution:
+Revised the project plan to replace the Annual Temperature Anomalies dataset with an energy production dataset, ensuring the project's continuity and relevance to the revised research question.
 
 # Project Updates
 
@@ -128,9 +131,23 @@ Continued utilizing available datasets while developing strategies to handle mis
 
 ## Script Development
 - Began developing the data pipeline script (pipeline.py) to automate the data collection and transformation process.
+- Made scripts executable using chmod +x command to ensure they can be run as entry points for the data pipeline.
+- Committed changes to Git and pushed them to the GitHub repository for review and collaboration.
+- Tested the data pipeline script locally to verify its functionality and ensure it saves the processed data in the appropriate directory.
 - Faced challenges in structuring the Datasource2 (Per Capita Greenhouse Gas Emissions) due to inconsistencies with the original data on ourworldindata.org.
 - Investigated methods to filter and preprocess the data to align with project requirements.
 - Explored potential modifications to the project question to accommodate alternative datasets or adjustments in data processing.
+
+## Data Refinement and Analysis Preparation
+- Updated the project question to focus on the relationship between greenhouse gas emissions and energy production.
+- Refined the selection of columns from both datasets to streamline data analysis while retaining essential information.
+- Finalized the script to filter and merge the datasets, ensuring data consistency and completeness.
+
+## Next Steps
+- Perform trend analysis on greenhouse gas emissions and energy production.
+- Explore relationships between energy sources and greenhouse gas emissions.
+- Investigate the impact of economic and regional factors on emissions and energy consumption.
+
 <!--
 ## Script Testing and Debugging
 - Tested the data pipeline script locally to ensure its functionality.
