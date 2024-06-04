@@ -49,7 +49,7 @@ pipeline GoodsTransportPipeline {
 
     // Transform the table
     block DataLoader oftype SQLiteLoader  {
-        table: "goodsTransportedByTrain"; file: "./goodsTransportedByTrain.sqlite";
+        table: "goods"; file: "./goodsTransportedByTrain.sqlite";
     }
 
     // // Load the cleaned and transformed data into SQLite
