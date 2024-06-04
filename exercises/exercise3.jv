@@ -1,6 +1,6 @@
 pipeline GoodsTransportPipeline {
 
-    // Sequence of the pipeline
+    // Sequence of the pipeline.
     DataHttpExtractor -> DataFileInterpreter -> DataCSVInterpreter -> ColumnDeleter -> RowsDeleter -> DataTableInterpreter -> DataLoader ;
 
     // HTTP Extractor to fetch CSV data
