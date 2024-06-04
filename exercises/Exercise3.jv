@@ -1,0 +1,88 @@
+pipeline GoodsTransportPipeline {
+
+    // Sequence of the pipeline
+    DataHttpExtractor -> DataFileInterpreter -> DataCSVInterpreter -> ColumnDeleter -> RowsDeleter -> DataTableInterpreter -> DataLoader ;
+
+    // HTTP Extractor to fetch CSV data
+    block DataHttpExtractor oftype HttpExtractor {
+        url: "https://www-genesis.destatis.de/genesis/downloads/00/tables/46131-0014_00.csv";
+    }
+
+    // Convert the file to TextFile
+    block DataFileInterpreter oftype TextFileInterpreter  {
+        encoding: 'latin2';
+    }
+
+    // Deleting unwanted text lines
+    //block DataTextLineDeleter oftype TextLineDeleter {
+    //    lines: [1, 2, 3, 4, 5, 6, 7, 8, 41338, 41338];
+    //}
+
+    // Interpret the data as CSV
+    block DataCSVInterpreter oftype CSVInterpreter {
+        delimiter: ';';
+    }
+
+    // Clean the data by removing irrelevant columns
+    block ColumnDeleter oftype ColumnDeleter {
+        delete: [column F, column G, column H, column I, column J, column K, column L, column M, column N, column O, column P, column Q, column R, column S, column T, column U, column V, column W, column X, column Y, column Z, column AA, column AB, column AC, column AD, column AE, column AF, column AG, column AH, column AI, column AJ, column AK, column AL, column AM, column AN, column AO, column AP, column AQ, column AR, column AS];
+    }
+
+    block RowsDeleter oftype RowDeleter {
+    delete: [row 1, row 2, row 3, row 4, row 5, row 6, row 7, row 8, row 41338, row 41338];
+    }
+
+    // Interpret the table
+    block DataTableInterpreter oftype TableInterpreter {
+        header: false;
+   columns: [
+            "year" oftype integer,
+            "month" oftype GerMon,
+            "goods_id" oftype idCon,
+            "goods_name" oftype text,
+            "goods_source" oftype text,
+            "abroad" oftype PosOnly,
+            "total" oftype PosOnly
+     
+        ];
+    }
+
+    // Transform the table
+    block DataLoader oftype SQLiteLoader  {
+        table: "goodsTransportedByTrain"; file: "./goodsTransportedByTrain.sqlite";
+    }
+
+    // // Load the cleaned and transformed data into SQLite
+    // block SQLiteLoader oftype DataSQLiteLoader {
+    //     database: "GoodsTransportData.sqlite";
+    //     table_name: "GoodsTransport";
+    // }
+
+    valuetype PosOnly oftype text{
+        constraints: [
+        PositiveNum,
+    ];
+    }
+
+    valuetype GerMon oftype text{
+        constraints: [
+        GermanMonth,
+    ];
+    }
+
+    constraint PositiveNum on text:
+        value matches /^[0-9]\d*$/;
+
+    constraint GermanMonth oftype AllowlistConstraint {
+   allowlist: ["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
+ }
+
+ valuetype idCon oftype text{
+        constraints: [
+        id,
+    ];
+    }
+
+    constraint id on text:
+        value matches /^NST7-[A-Z0-9]{3}/;
+}
