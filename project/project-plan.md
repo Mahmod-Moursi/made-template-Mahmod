@@ -12,7 +12,7 @@ Climate Change Analysis: Understanding the Relationship between Greenhouse Gas E
 
 Climate change is a pressing global issue with far-reaching implications for ecosystems, economies, and human well-being. This project aims to analyze the relationship between greenhouse gas emissions and energy production using data-driven methods. By examining emissions and energy data from multiple countries, we seek to uncover patterns, trends, and potential causal relationships. Insights gained from this analysis can inform policy decisions, mitigation strategies, and adaptation measures to address climate change effectively.
 
-In selecting countries for analysis, we considered several factors such as geographical diversity, economic significance, emissions intensity, and data availability. The chosen countries represent a range of regions, economic statuses, and emissions profiles, providing a comprehensive perspective on the global dynamics of climate change. Specifically, we have chosen:
+In selecting countries for detailed analysis, we considered factors such as geographical diversity, economic significance, emissions intensity, and data availability. The chosen countries represent a range of regions, economic statuses, and emissions profiles, providing a comprehensive perspective on the global dynamics of climate change. Specifically, we have chosen:
 
 - United States: Major emitter, highly industrialized.
 - China: World's largest emitter, significant economic influence.
@@ -30,19 +30,18 @@ This diverse set of countries provides a rich dataset for analyzing the complex 
 ## Datasources
 
 ### Datasource1: CO2 and Greenhouse Gas Emissions
-* Metadata URL: https://github.com/owid/co2-data/blob/master/owid-co2-data.csv
-* Data URL: https://github.com/owid/co2-data
+* Metadata URL: [CO2 Data Metadata](https://github.com/owid/co2-data/blob/master/owid-co2-data.csv)
+* Data URL: [CO2 Data](https://github.com/owid/co2-data)
 * Data Type: CSV
 
 This dataset contains data on CO2 and greenhouse gas emissions for various countries over a specified time period. Each record includes information such as the country, year, population, GDP, total greenhouse gas emissions, and per capita emissions.
 
 ### Datasource2: Energy
-* Metadata URL: https://github.com/owid/energy-data/blob/master/owid-energy-data.csv
-* Data URL: https://github.com/owid/energy-data
+* Metadata URL: [Energy Data Metadata](https://github.com/owid/energy-data/blob/master/owid-energy-data.csv)
+* Data URL: [Energy Data](https://github.com/owid/energy-data)
 * Data Type: CSV
 
 This dataset provides data on energy production and consumption for different countries over a specified time period. Each record includes information such as the country, year, population, GDP, total electricity generation, and emissions from electricity generation.
-
 
 ## Work Packages
 
@@ -83,7 +82,7 @@ Ultimately decided to replace the Annual Temperature Anomalies dataset with a mo
 ## 2. Dataset Content Mismatch
 
 ### Issue:
-Upon retrieval of data from the GitHub repository for CO2 and greenhouse gas emissions, it became apparent that the dataset differed in format and content from the data in the Our World in Data website , complicating data processing and analysis.
+Upon retrieval of data from the GitHub repository for CO2 and greenhouse gas emissions, it became apparent that the dataset differed in format and content from the data on the Our World in Data website, complicating data processing and analysis.
 
 ### Solution:
 Thoroughly examined the dataset's documentation and structure to gain a better understanding of its contents and variables.
@@ -147,31 +146,3 @@ Revised the project plan to replace the Annual Temperature Anomalies dataset wit
 - Perform trend analysis on greenhouse gas emissions and energy production.
 - Explore relationships between energy sources and greenhouse gas emissions.
 - Investigate the impact of economic and regional factors on emissions and energy consumption.
-
-<!--
-## Script Testing and Debugging
-- Tested the data pipeline script locally to ensure its functionality.
-- Identified and resolved issues related to data extraction, transformation, and storage.
-- Collaborated with peers and mentors to troubleshoot challenging aspects of the script development.
-
-## Project Plan Review
-- Reviewed and updated the project plan to reflect changes in data availability and project scope.
-- Documented challenges and considerations encountered during the data collection and preprocessing phases.
-- Revisited the project objectives and refined the research question based on available datasets and project constraints.
-
-## Script Deployment and Documentation
-- Prepared the script (pipeline.py) for deployment by making it executable (pipeline.sh) and ensuring compatibility with GitHub workflows.
-- Documented the script's functionality, input/output requirements, and potential troubleshooting steps.
-- Updated the README.md file to provide instructions for running the script and accessing project resources.
-
-## Final Review and Reflection
-- Conducted a final review of the project components to ensure alignment with project objectives and requirements.
-- Reflecting on the project journey, identified lessons learned and areas for improvement in future projects.
-- Prepared for project presentation and discussion with mentors, incorporating feedback and insights gained throughout the project lifecycle.
-
-## Project Conclusion
-- Completed the data pipeline implementation, addressing challenges and adapting to changes in data availability and project scope.
-- Compiled project documentation, including the project plan, script documentation, and project updates, for submission and review.
-- Reflecting on the project experience, considered implications for future research and potential avenues for further exploration.
--->
-
