@@ -2,29 +2,94 @@ import pandas as pd
 import os
 
 # Define URLs for datasets
-co2_data_url = "https://nyc3.digitaloceanspaces.com/owid-public/data/co2/owid-co2-data.csv"
-# Update with the actual URL for the temperature anomalies dataset when available
-temperature_data_url = "https://example.com/temperature-anomalies.csv"
+co2_url = 'https://github.com/owid/co2-data/blob/master/owid-co2-data.csv?raw=true'
+energy_url = 'https://github.com/owid/energy-data/blob/master/owid-energy-data.csv?raw=true'
 
-# Define selected countries and years range
-selected_countries = ['United States', 'China', 'India', 'Brazil', 'Germany', 'Russia', 'Japan', 'South Africa', 'Australia', 'Canada']
-#based on the common years from the temperature anomalies file, will be changed once the temperature anomalies file is provided.
-start_year = 1850
-end_year = 2022
+# Load the data
+co2_data = pd.read_csv(co2_url)
+energy_data = pd.read_csv(energy_url)
 
-# Function to load and filter CO2 dataset
-def load_and_filter_co2_data(url):
-    co2_df = pd.read_csv(url)
-    co2_df = co2_df[co2_df['country'].isin(selected_countries)]
-    co2_df = co2_df[(co2_df['year'] >= start_year) & (co2_df['year'] <= end_year)]
-    co2_df = co2_df[['country', 'year', 'total_ghg']]  # Select required columns
-    co2_df = co2_df.dropna(subset=['total_ghg'])  # Remove rows with missing total_ghg values
-    return co2_df
+# Display initial missing data percentages
+print("Initial CO2 Data Missing Values (%):")
+print((co2_data.isnull().mean() * 100).sort_values(ascending=False))
+print("\nInitial Energy Data Missing Values (%):")
+print((energy_data.isnull().mean() * 100).sort_values(ascending=False))
 
-# Function to load and filter temperature anomalies dataset
-def load_and_filter_temperature_data(url):
-    # Placeholder function until actual dataset URL is available
-    pass
+print("Initial CO2 Data Missing Values (%):")
+print((co2_data.isnull().mean().mean() * 100))
+print("\nInitial Energy Data Missing Values (%):")
+print((energy_data.isnull().mean().mean() * 100))
+
+# Drop columns with more than 50% missing values
+co2_data_cleaned = co2_data.dropna(thresh=0.5 * len(co2_data), axis=1)
+energy_data_cleaned = energy_data.dropna(thresh=0.5 * len(energy_data), axis=1)
+
+# Drop rows with any remaining missing values
+co2_data_cleaned = co2_data_cleaned.dropna()
+energy_data_cleaned = energy_data_cleaned.dropna()
+
+# Display missing data percentages after dropping rows
+print("\nCO2 Data Missing Values After Dropping Rows (%):")
+print((co2_data_cleaned.isnull().mean() * 100).sort_values(ascending=False))
+print("\nEnergy Data Missing Values After Dropping Rows (%):")
+print((energy_data_cleaned.isnull().mean() * 100).sort_values(ascending=False))
+
+print("\nCO2 Data Missing Values After Dropping Rows (%):")
+print((co2_data_cleaned.isnull().mean().mean() * 100))
+print("\nEnergy Data Missing Values After Dropping Rows (%):")
+print((energy_data_cleaned.isnull().mean().mean() * 100))
+
+# Identify the common year range across all countries
+common_years_co2 = co2_data_cleaned.groupby('country')['year'].agg(['min', 'max']).reset_index()
+common_years_energy = energy_data_cleaned.groupby('country')['year'].agg(['min', 'max']).reset_index()
+
+# Merge to find common start and end years
+common_years = common_years_co2.merge(common_years_energy, on='country', suffixes=('_co2', '_energy'))
+common_years['common_start_year'] = common_years[['min_co2', 'min_energy']].max(axis=1)
+common_years['common_end_year'] = common_years[['max_co2', 'max_energy']].min(axis=1)
+
+# Filter out countries with no overlapping years
+common_years = common_years[common_years['common_start_year'] <= common_years['common_end_year']]
+
+# Create a set of countries with valid year ranges
+valid_countries = set(common_years['country'])
+
+# Determine overall common start and end years
+overall_common_start_year = common_years['common_start_year'].max()
+overall_common_end_year = common_years['common_end_year'].min()
+
+print(f"Overall Common Start Year: {overall_common_start_year}")
+print(f"Overall Common End Year: {overall_common_end_year}")
+
+# Filter the data to include only valid countries and common years
+co2_data_filtered = co2_data_cleaned[
+    (co2_data_cleaned['country'].isin(valid_countries)) & 
+    (co2_data_cleaned['year'].between(overall_common_start_year, overall_common_end_year))
+]
+
+energy_data_filtered = energy_data_cleaned[
+    (energy_data_cleaned['country'].isin(valid_countries)) & 
+    (energy_data_cleaned['year'].between(overall_common_start_year, overall_common_end_year))
+]
+
+# Verify the filtering
+def verify_years(data, start_year, end_year):
+    year_range = data.groupby('country')['year'].agg(['min', 'max'])
+    if all(year_range['min'] == start_year) and all(year_range['max'] == end_year):
+        print("All countries have the same start and end years.")
+    else:
+        print("There are discrepancies in the start and/or end years:")
+        print(year_range[year_range['min'] != start_year])
+        print(year_range[year_range['max'] != end_year])
+
+print("\nVerifying CO2 Data Years:")
+verify_years(co2_data_filtered, overall_common_start_year, overall_common_end_year)
+
+print("\nVerifying Energy Data Years:")
+verify_years(energy_data_filtered, overall_common_start_year, overall_common_end_year)
+
+# Merge datasets
+merged_data = pd.merge(co2_data_filtered, energy_data_filtered, on=['country', 'year', 'iso_code'])
 
 # Function to store data in /data directory
 def save_data(df, filename):
@@ -36,12 +101,6 @@ def save_data(df, filename):
     df.to_csv(filepath, index=False)
 
 if __name__ == "__main__":
-    # Load and filter CO2 dataset
-    co2_df = load_and_filter_co2_data(co2_data_url)
-
-    # Load and filter temperature anomalies dataset (placeholder until actual URL available)
-    # temperature_df = load_and_filter_temperature_data(temperature_data_url)
-
+    
     # Save filtered datasets
-    save_data(co2_df, 'co2_data_filtered.csv')
-    # save_data(temperature_df, 'temperature_data_filtered.csv')
+    save_data(merged_data, 'merged_data.csv')
