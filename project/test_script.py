@@ -24,7 +24,7 @@ def test_output_file_format():
     
     # Load the CSV file and check its structure
     df = pd.read_csv(output_file)
-    required_columns = ['country', 'year', 'iso_code']  # Add more columns as needed
+    required_columns = ['country', 'year', 'iso_code']  
     
     for column in required_columns:
         assert column in df.columns, f"Missing required column: {column}"
