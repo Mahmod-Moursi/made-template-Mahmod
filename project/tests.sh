@@ -1,4 +1,3 @@
-bash
 #!/bin/bash
 
 # Execute the data pipeline script
