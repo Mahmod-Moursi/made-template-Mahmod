@@ -1,0 +1,95 @@
+// Sequence of the pipeline
+pipeline batteryPipeline {
+    DataHttpExtractor -> BatteryArchiveInterpreter -> BatterieFilePicker -> batteryFileInterpreter -> batteryCSVFileInterpreter -> HeaderSequenceWriter -> BatteryTempHeader -> BatteryTableInterpreter -> CelToFahTransformer -> BatteryCelToFahTransformer -> BatteryTableLoader;
+
+    // HTTP Extractor to fetch CSV data, but this time it's from a zip file
+    block DataHttpExtractor oftype HttpExtractor {
+        url: "https://www.mowesta.com/data/measure/mowesta-dataset-20221107.zip";
+    }
+
+    // To use the zipfile
+    block BatteryArchiveInterpreter oftype ArchiveInterpreter {
+        archiveType: "zip";
+    }
+
+    // To use the file itself from the zipfile
+    block BatterieFilePicker oftype FilePicker {
+        path: "/data.csv";
+    }
+
+    // Convert the file to TextFile
+    block batteryFileInterpreter oftype TextFileInterpreter {}
+
+    // Interpret the data as CSV
+    block batteryCSVFileInterpreter oftype CSVInterpreter {
+        delimiter: ";";
+    }
+
+    // Only using certian columns and renaming or reshaping
+    block HeaderSequenceWriter oftype CellWriter {
+        at: range A1:E1;
+        write: ["id", "producer", "model", "month", "temperature"];
+    }
+
+    // Only using certian columns and renaming or reshaping
+    block BatteryTempHeader oftype CellWriter {
+        at: cell J1;
+        write: ["battery_temperature"];
+    }
+
+    //Translating from German to English and assiging the type of the data
+    block BatteryTableInterpreter oftype TableInterpreter {
+        header: true;
+        columns: [
+            "id" oftype ID,
+            "producer" oftype text,
+            "model" oftype text,
+            "month" oftype Month,
+            "temperature" oftype decimal,
+            "battery_temperature" oftype decimal
+        ];
+    }
+
+    //Transform temperatures in Celsius to Fahrenheit 
+    block CelToFahTransformer oftype TableTransformer {
+        inputColumns: ['temperature'];
+        outputColumn: 'temperature';
+        use: CtoF;
+    }
+
+    //Transform temperatures in Celsius to Fahrenheit for the battery
+    block BatteryCelToFahTransformer oftype TableTransformer {
+        inputColumns: ['battery_temperature'];
+        outputColumn: 'battery_temperature';
+        use: CtoF;
+    }
+
+    // Transform the table and writing it into an sqlite file
+    block BatteryTableLoader oftype SQLiteLoader {
+        table: "temperatures"; file: "./temperatures.sqlite";
+    }
+}
+
+
+//validations, for the ID in this example
+constraint validID on integer:
+    value > 0;
+
+valuetype ID oftype integer {
+    constraints: [validID];
+}
+
+//validations as well
+constraint OverZero on integer:
+    value >= 1 and value <= 12;
+
+valuetype Month oftype integer {
+    constraints: [OverZero];
+}
+
+//formula to switch from Celsius to Fahrenheit
+transform CtoF {
+   from Celsius oftype decimal;
+   to Fahrenheit oftype decimal;
+   Fahrenheit: (Celsius * 9/5) + 32;
+}
