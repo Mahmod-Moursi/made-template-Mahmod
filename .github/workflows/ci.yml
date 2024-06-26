@@ -25,7 +25,7 @@ jobs:
 
     - name: Run tests
       run: |
-        chmod +x pipeline.sh
-        chmod +x tests.sh
-        ./pipeline.sh
-        ./tests.sh
+        chmod +x project/pipeline.sh
+        chmod +x project/tests.sh
+        ./project/pipeline.sh
+        ./project/tests.sh
