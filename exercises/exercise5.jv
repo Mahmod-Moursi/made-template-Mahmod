@@ -1,0 +1,61 @@
+// Sequence of the pipeline
+pipeline GTFSPipeline {
+    DataHttpExtractor -> GTFSArchiveInterpreter -> OnlyStopsFiles -> FileInterpreter -> CSVFileInterpreter -> GTFSTableInterpreter -> TableMaker;
+
+// HTTP Extractor to fetch CSV data, but like before it's from a zip file
+block DataHttpExtractor oftype HttpExtractor {
+        url: "https://gtfs.rhoenenergie-bus.de/GTFS.zip";
+    }
+
+// To use the zipfile
+block GTFSArchiveInterpreter oftype ArchiveInterpreter {
+        archiveType: "zip";
+    }
+// To pick the file we want from the zipfile
+    block OnlyStopsFiles oftype FilePicker {
+        path: "/stops.txt";
+    }
+// For the german umlauts we choose utf8 encoding while also converting the file to TextFile
+    block FileInterpreter oftype TextFileInterpreter {
+        encoding: "utf8";
+    }
+// Interpret the data as CSV
+    block CSVFileInterpreter oftype CSVInterpreter {
+        delimiter: ",";
+        enclosing: '"';
+    }
+// Only using certian columns and validating using the constraints and so on
+    block GTFSTableInterpreter oftype TableInterpreter {
+        header: true;
+        columns: [
+            "stop_id" oftype integer,
+            "stop_name" oftype text,
+            "stop_lat" oftype Coord, // A constraint we made
+            "stop_lon" oftype Coord, // A constraint we made
+            "zone_id" oftype OneSix // A constraint we made
+        ];
+    }
+// Transform the table and writing it into an sqlite file
+    block TableMaker oftype SQLiteLoader {
+        table: "stops";
+        file: "gtfs.sqlite";
+    }
+}
+
+// This constraint is to Only keep stops from zone 1645
+constraint StopsZone on integer:
+    value == 1645;
+
+valuetype OneSix oftype integer {
+    constraints: [StopsZone];
+}
+
+// This constraint is that it must be a geographic coordinates between -90 and 90, including upper/lower bounds
+constraint LatAndLon oftype RangeConstraint {
+    lowerBound: -90;
+    upperBound: 90;
+}
+
+valuetype Coord oftype decimal {
+    constraints: [LatAndLon];
+}
