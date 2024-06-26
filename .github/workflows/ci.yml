@@ -31,5 +31,5 @@ jobs:
     - name: Run tests
       run: |
         ls
-        ./project/pipeline.sh
-        ./project/tests.sh
+        project/pipeline.sh
+        project/tests.sh
