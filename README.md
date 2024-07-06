@@ -21,7 +21,8 @@ This project analyzes CO2 emissions and energy consumption patterns across ten c
 
 ## Data
 1. The data used for this analysis is included in the data/ directory:
-   merged_data.csv: Merged dataset containing CO2 emissions, primary energy consumption, GDP, and other relevant features.
+
+merged_data.csv: Merged dataset containing CO2 emissions, primary energy consumption, GDP, and other relevant features.
 
 ## Running the Analysis
 The analysis is divided into several scripts:
