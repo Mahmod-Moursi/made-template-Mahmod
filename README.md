@@ -12,7 +12,7 @@ This project aims to analyze the relationship between CO2 emissions and primary 
 2.Identify crucial factors impacting CO2 emissions: Determine what contributes most significantly to emissions.
 3.Deliver actionable insights for policymakers: Provide recommendations based on our findings to help shape effective climate policies.
 
-##Data Sources and Features
+## Data Sources and Features
 We merged data from two comprehensive datasets spanning from 2007 to 2016. Key features include:
 -Year
 -Country
@@ -22,7 +22,7 @@ We merged data from two comprehensive datasets spanning from 2007 to 2016. Key f
 -CO2 emissions from coal, oil, gas
 -Population
 
-##Data Preprocessing Steps
+## Data Preprocessing Steps
 -Handling missing values: Ensuring data integrity by addressing null or empty entries.
 -Normalization: Scaling data to ensure all variables have equal influence.
 -Correlation analysis: Evaluating relationships between variables.
@@ -30,7 +30,7 @@ We merged data from two comprehensive datasets spanning from 2007 to 2016. Key f
 -PCA for dimensionality reduction: Reducing data dimensions while retaining key information.
 -Outlier detection: Identifying and addressing anomalies in the data.
 
-##Detailed Preprocessing Steps:
+## Detailed Preprocessing Steps:
 -Data Loading: Loaded data from CSV files using provided URLs and dropped columns with more than 50% missing values, as well as rows with any remaining missing values.
 -Data Transformation: Identified common years across countries and filtered the data to include only valid countries and common years.
 -Data Merging: Merged the CO2 and energy datasets on 'country', 'year', and 'iso_code' columns.
