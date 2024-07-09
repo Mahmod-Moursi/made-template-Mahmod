@@ -14,8 +14,8 @@ This project analyzes CO2 emissions and energy consumption patterns across ten c
 ## Setup
 1. Clone the repository:
    ```bash
-   git clone https://github.com/Mahmod-Moursi/your-repo-name.git
-   cd your-repo-name
+   git clone https://github.com/Mahmod-Moursi/made-template-Mahmod
+   cd made-template-Mahmod
 2. Install the required libraries:
    pip install -r requirements.txt
 
